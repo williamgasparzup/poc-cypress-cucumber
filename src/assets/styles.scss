@@ -1,0 +1,15 @@
+body {
+  margin: 0px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: radial-gradient(
+    200% 200% at 100% 100%,
+    white 50%,
+    #e2e2e2 20%
+  );
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: top;
+  background-origin: border-box;
+  background-repeat: no-repeat;
+}
