@@ -1,14 +1,25 @@
 import { createClient, Photo } from 'pexels'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import usePagination from './usePagination'
+import uniqBy from '../lib/uniqBy'
 
 const apiKey = process.env.API_KEY || ''
 const client = createClient(apiKey)
 const { photos } = client
 
+const PER_PAGE = 10
+const INITIAL_PAGE = 1
 const WIDE_PHOTOS = 2
 const REGULAR_PHOTOS = 1
 
 type PhotoWithCols = Photo & { cols: number }
+
+export const scrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
 
 const getRowWidth = (row: PhotoWithCols[] = []) =>
   row.reduce((all, curr) => all + curr.cols, 0)
@@ -48,37 +59,60 @@ const getPhotoOrder = (photos: Photo[], columns: number): PhotoWithCols[] => {
   )
 }
 
-export const usePhotos = (query = '', columns: number, adjust: boolean) => {
+export const usePhotos = (
+  searchText = '',
+  columns: number,
+  adjust: boolean
+) => {
+  const searchRef = useRef(searchText)
   const [data, setData] = useState<Photo[]>([])
   const [loading, setLoading] = useState(false)
+  const [refetching, setRefetching] = useState(false)
+  const [page, resetPage] = usePagination(INITIAL_PAGE)
+
+  const getPhotos = useCallback((query: string, currentPage?: number) => {
+    searchRef.current = query
+    const page = currentPage || INITIAL_PAGE
+
+    if (query) {
+      return photos.search({ query, per_page: PER_PAGE, page })
+    } else {
+      return photos.curated({ per_page: PER_PAGE, page })
+    }
+  }, [])
 
   useEffect(() => {
     setLoading(true)
+    getPhotos(searchText)
+      .then((response) => {
+        if ('photos' in response) {
+          setData(response.photos)
+        }
+      })
+      .then(scrollTop)
+      .finally(() => setLoading(false))
 
-    if (query) {
-      photos
-        .search({ query })
-        .then((response) => {
-          if ('photos' in response) {
-            setData(response.photos)
-          }
-        })
-        .finally(() => setLoading(false))
-    } else {
-      photos
-        .curated()
-        .then((response) => {
-          if ('photos' in response) {
-            setData(response.photos)
-          }
-        })
-        .finally(() => setLoading(false))
-    }
-  }, [query])
+    return resetPage
+  }, [searchText, getPhotos, resetPage])
+
+  useEffect(() => {
+    setRefetching(true)
+    getPhotos(searchRef.current, page)
+      .then((response) => {
+        if ('photos' in response) {
+          setData((previous) => uniqBy('id', [...previous, ...response.photos]))
+        }
+      })
+      .finally(() => setRefetching(false))
+  }, [getPhotos, page])
 
   if (adjust) {
-    return [getPhotoOrder(data, columns), loading] as const
+    return [getPhotoOrder(data, columns), loading, refetching] as const
   }
 
-  return [data.map((photo) => ({ ...photo, cols: 1 })), loading] as const
+  return [
+    data.map((photo) => ({ ...photo, cols: 1 })),
+    loading,
+    refetching,
+  ] as const
 }

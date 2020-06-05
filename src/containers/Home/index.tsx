@@ -14,7 +14,7 @@ import {
   FormControlLabel,
   InputAdornment,
 } from '@material-ui/core'
-import { usePhotos } from '../../hooks/usePhotos'
+import { scrollTop, usePhotos } from '../../hooks/usePhotos'
 import { useDebounce } from '../../hooks/useDebounce'
 import IconSearch from '@material-ui/icons/Search'
 import IconCamera from '@material-ui/icons/PhotoCameraOutlined'
@@ -27,11 +27,13 @@ const useStyles = makeStyles((theme) => ({
   header: {
     padding: theme.spacing(2),
     display: 'grid',
-    gridTemplateColumns: '0.5fr 2fr 1fr 1fr 1fr',
+    gridTemplateColumns: '0.5fr 3fr 2fr 1fr 1fr',
+    gridTemplateRows: '64px',
     alignItems: 'center',
     gridGap: '48px',
     position: 'sticky',
     background: theme.palette.background.paper,
+    borderBottom: '1px solid #eeeeee',
     top: 0,
     zIndex: 1,
   },
@@ -46,12 +48,17 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     transform: 'translateZ(0)',
   },
+  item: {
+    border: '1px solid #bdbdbd',
+    borderRadius: '6px',
+  },
   title: {
     display: 'grid',
     flexDirection: 'column',
     gridTemplateColumns: 'auto 1fr',
     gridGap: '6px',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   titleLabel: {
     fontWeight: 400,
@@ -60,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App: FC = () => {
   const [search, setSearch] = useState('')
-  const [columns, setColumns] = useState(4)
+  const [columns, setColumns] = useState(3)
   const [adjust, setAdjust] = useState(true)
   const classes = useStyles()
   const query = useDebounce(search)
@@ -68,9 +75,9 @@ const App: FC = () => {
   const [photos] = usePhotos(query, columns, adjust)
 
   return (
-    <Grid className={classes.root} spacing={2}>
+    <Grid className={classes.root}>
       <div className={classes.header}>
-        <div className={classes.title}>
+        <div className={classes.title} onClick={scrollTop}>
           <IconCamera color='secondary' />
           <Typography
             variant='h5'
@@ -125,10 +132,22 @@ const App: FC = () => {
         />
       </div>
       <div className={classes.wrapper}>
-        <GridList cellHeight={400} cols={columns} className={classes.list}>
+        <GridList
+          spacing={16}
+          cellHeight={400}
+          cols={columns}
+          className={classes.list}>
           {photos.map((photo) => (
-            <GridListTile key={photo.id} cols={photo.cols} rows={1}>
-              <img src={photo.src.large} alt={photo.photographer} />
+            <GridListTile
+              key={photo.id}
+              rows={1}
+              cols={photo.cols}
+              classes={{ tile: classes.item }}>
+              <img
+                draggable={false}
+                src={photo.src.large}
+                alt={photo.photographer}
+              />
             </GridListTile>
           ))}
         </GridList>
