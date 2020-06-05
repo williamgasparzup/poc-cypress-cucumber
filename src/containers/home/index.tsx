@@ -3,6 +3,7 @@ import { Grid, makeStyles } from '@material-ui/core'
 import { HeaderContext } from '../../hooks/useHeaderContext'
 import Header from './header'
 import Photos from './photos'
+import Footer from './footer'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -38,6 +39,7 @@ const App: FC = () => {
         <Header />
         <Photos />
       </Grid>
+      <Footer />
     </HeaderContext.Provider>
   )
 }

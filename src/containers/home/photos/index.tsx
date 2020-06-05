@@ -17,8 +17,9 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    paddingBottom: 36,
+    paddingBottom: 128,
     alignItems: 'center',
+    minHeight: 'calc(100vh - 225px)',
   },
   loadingContainer: {
     minHeight: 64,
@@ -73,7 +74,11 @@ const Photos: FC = () => {
             classes={{ tile: classes.item }}>
             <img
               draggable={false}
-              src={photo.src.large}
+              src={
+                columns.value > 1 && photo.cols === 1
+                  ? photo.src.portrait
+                  : photo.src.landscape
+              }
               alt={photo.photographer}
             />
           </GridListTile>
