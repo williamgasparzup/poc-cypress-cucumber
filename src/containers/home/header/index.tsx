@@ -60,6 +60,7 @@ const Header = () => {
         </Typography>
       </div>
       <TextField
+        autoFocus
         value={searchText.value}
         placeholder='Search (e.g.: ocean, sky, life, etc...)'
         type='search'
