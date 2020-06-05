@@ -61,7 +61,7 @@ const Header = () => {
       </div>
       <TextField
         value={searchText.value}
-        placeholder='Pesquisar'
+        placeholder='Search (e.g.: ocean, sky, life, etc...)'
         type='search'
         InputProps={{
           startAdornment: (
@@ -75,19 +75,19 @@ const Header = () => {
       />
       <div />
       <FormControl variant='outlined'>
-        <InputLabel id='demo-simple-select-outlined-label'>Colunas</InputLabel>
+        <InputLabel id='select-label'>Columns</InputLabel>
         <Select
-          labelId='demo-simple-select-outlined-label'
-          id='demo-simple-select-outlined'
+          labelId='select-label'
+          id='select'
           value={columns.value}
           onChange={(event) => {
             columns.setValue(Number(event.target.value))
           }}
           label='Age'>
-          <MenuItem value={1}>Uma</MenuItem>
-          <MenuItem value={2}>Duas</MenuItem>
-          <MenuItem value={3}>Três</MenuItem>
-          <MenuItem value={4}>Quatro</MenuItem>
+          <MenuItem value={1}>One</MenuItem>
+          <MenuItem value={2}>Two</MenuItem>
+          <MenuItem value={3}>Three</MenuItem>
+          <MenuItem value={4}>Four</MenuItem>
         </Select>
       </FormControl>
       <FormControlLabel
@@ -98,7 +98,7 @@ const Header = () => {
             name='checkedA'
           />
         }
-        label='Ajuste dinâmico'
+        label='Dynamic layout'
       />
     </div>
   )

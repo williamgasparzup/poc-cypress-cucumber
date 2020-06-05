@@ -4,6 +4,7 @@ import {
   GridList,
   GridListTile,
   CircularProgress,
+  Typography,
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { usePhotos } from '../../../hooks/usePhotos'
@@ -42,6 +43,9 @@ const useStyles = makeStyles(() => ({
     borderRadius: '6px',
     flex: 1,
   },
+  nothing: {
+    margin: '48px 0',
+  },
 }))
 
 const Photos: FC = () => {
@@ -70,7 +74,6 @@ const Photos: FC = () => {
             <img
               draggable={false}
               src={photo.src.large}
-              width={photo.width}
               alt={photo.photographer}
             />
           </GridListTile>
@@ -102,12 +105,25 @@ const Photos: FC = () => {
     [columns.value, adjust.value]
   )
 
+  const renderNothing = useMemo(
+    () =>
+      searchText.value && (
+        <Typography className={classes.nothing} variant='h4'>
+          {'No results have been found for "' + searchText.value + '".'}
+        </Typography>
+      ),
+    [searchText.value]
+  )
+
   return (
     <div className={classes.container}>
       <div className={classes.wrapper}>
         <div className={classes.list}>
           <div hidden={loading}>{renderPhotos}</div>
           <div hidden={!loading}>{renderSkeleton}</div>
+          <div hidden={!(!photos.length && !loading && !refetching)}>
+            {renderNothing}
+          </div>
         </div>
       </div>
       <div className={classes.loadingContainer}>
