@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { ThemeProvider, ThemeOptions, createMuiTheme } from '@material-ui/core'
-import Home from './containers/Home'
+import Home from './containers/home'
 import { Switch, BrowserRouter, Route } from 'react-router-dom'
 import './assets/styles.scss'
 

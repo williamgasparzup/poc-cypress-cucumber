@@ -2,6 +2,7 @@ import { createClient, Photo } from 'pexels'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import usePagination from './usePagination'
 import uniqBy from '../lib/uniqBy'
+import { getPhotoOrder } from '../lib/grid'
 
 const apiKey = process.env.API_KEY || ''
 const client = createClient(apiKey)
@@ -9,10 +10,6 @@ const { photos } = client
 
 const PER_PAGE = 10
 const INITIAL_PAGE = 1
-const WIDE_PHOTOS = 2
-const REGULAR_PHOTOS = 1
-
-type PhotoWithCols = Photo & { cols: number }
 
 export const scrollTop = () => {
   window.scrollTo({
@@ -21,54 +18,17 @@ export const scrollTop = () => {
   })
 }
 
-const getRowWidth = (row: PhotoWithCols[] = []) =>
-  row.reduce((all, curr) => all + curr.cols, 0)
-
-const getPhotoOrder = (photos: Photo[], columns: number): PhotoWithCols[] => {
-  const rows = new Map<number, PhotoWithCols[]>()
-  const columnSize = Math.max(columns - 1, 1)
-
-  for (const photo of photos) {
-    const index = rows.size - 1
-    const isLandscape = photo.width > photo.height
-    const cols = isLandscape ? WIDE_PHOTOS : REGULAR_PHOTOS
-
-    if (index < 0) {
-      rows.set(0, [{ ...photo, cols }])
-    } else {
-      const currentRow = rows.get(index)
-      const width = getRowWidth(currentRow)
-
-      if (!currentRow) {
-        continue
-      }
-
-      if (width === columnSize) {
-        rows.set(index, [...currentRow, { ...photo, cols: 1 }])
-      } else if (width < columnSize) {
-        rows.set(index, [...currentRow, { ...photo, cols }])
-      } else {
-        rows.set(index + 1, [{ ...photo, cols }])
-      }
-    }
-  }
-
-  return Array.from(rows).reduce(
-    (all, [, current]) => [...all, ...current],
-    [] as PhotoWithCols[]
-  )
-}
-
 export const usePhotos = (
   searchText = '',
   columns: number,
   adjust: boolean
 ) => {
-  const searchRef = useRef(searchText)
   const [data, setData] = useState<Photo[]>([])
   const [loading, setLoading] = useState(false)
   const [refetching, setRefetching] = useState(false)
-  const [page, resetPage] = usePagination(INITIAL_PAGE)
+  const [page, resetPage] = usePagination(INITIAL_PAGE, loading)
+  const searchRef = useRef(searchText)
+  const pageRef = useRef(page)
 
   const getPhotos = useCallback((query: string, currentPage?: number) => {
     searchRef.current = query
@@ -96,6 +56,10 @@ export const usePhotos = (
   }, [searchText, getPhotos, resetPage])
 
   useEffect(() => {
+    if (page === pageRef.current) {
+      return
+    }
+
     setRefetching(true)
     getPhotos(searchRef.current, page)
       .then((response) => {
@@ -104,15 +68,9 @@ export const usePhotos = (
         }
       })
       .finally(() => setRefetching(false))
+
+    pageRef.current = page
   }, [getPhotos, page])
 
-  if (adjust) {
-    return [getPhotoOrder(data, columns), loading, refetching] as const
-  }
-
-  return [
-    data.map((photo) => ({ ...photo, cols: 1 })),
-    loading,
-    refetching,
-  ] as const
+  return [getPhotoOrder(data, columns, adjust), loading, refetching] as const
 }
