@@ -62,6 +62,7 @@ const Header = () => {
       <TextField
         autoFocus
         value={searchText.value}
+        name='search-input'
         placeholder='Search (e.g.: ocean, sky, life, etc...)'
         type='search'
         InputProps={{
@@ -79,8 +80,9 @@ const Header = () => {
         <InputLabel id='select-label'>Columns</InputLabel>
         <Select
           labelId='select-label'
-          id='select'
+          id='columns-select'
           value={columns.value}
+          MenuProps={{ id: 'columns-select-menu', role: 'select' }}
           onChange={(event) => {
             columns.setValue(Number(event.target.value))
           }}
@@ -96,7 +98,7 @@ const Header = () => {
           <Switch
             checked={adjust.value}
             onChange={() => adjust.setValue((val) => !val)}
-            name='checkedA'
+            name='switch-layout'
           />
         }
         label='Dynamic layout'

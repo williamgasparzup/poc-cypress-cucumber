@@ -74,6 +74,7 @@ const Photos: FC = () => {
             classes={{ tile: classes.item }}>
             <img
               draggable={false}
+              id={`photo-${photo.id}`}
               src={
                 columns.value > 1 && photo.cols === 1
                   ? photo.src.portrait

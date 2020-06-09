@@ -1,3 +1,7 @@
 {
-  "testFiles": "**/*.feature"
+  "testFiles": "**/*.feature",
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "TAGS": "not @ignore"
+  }
 }
