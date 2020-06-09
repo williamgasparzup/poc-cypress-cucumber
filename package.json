@@ -4,6 +4,7 @@
   "description": "POC of the Cypress + Cucumber",
   "main": "index.js",
   "scripts": {
+    "cypress:open": "cypress open",
     "start": "webpack-dev-server"
   },
   "author": "William Rozin Gaspar <william.gaspar@zup.com.br>",
@@ -20,24 +21,32 @@
     "typescript": "3.9.3"
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "5.4.1",
+    "@types/cypress-cucumber-preprocessor": "1.14.1",
     "@types/react": "16.9.35",
     "@types/react-dom": "16.9.8",
     "@types/react-router": "5.1.7",
     "@types/react-router-dom": "5.1.5",
+    "chai": "4.2.0",
     "css-loader": "3.5.3",
+    "cypress": "4.7.0",
+    "cypress-cucumber-preprocessor": "2.4.0",
     "dotenv-webpack": "1.8.0",
-    "html-loader": "^1.1.0",
-    "html-webpack-plugin": "^4.3.0",
-    "image-loader": "^0.0.1",
-    "image-webpack-loader": "^6.0.0",
+    "html-loader": "1.1.0",
+    "html-webpack-plugin": "4.3.0",
+    "image-loader": "0.0.1",
+    "image-webpack-loader": "6.0.0",
     "node-sass": "4.14.1",
     "prettier": "2.0.5",
     "sass-loader": "8.0.2",
-    "source-map-loader": "^1.0.0",
+    "source-map-loader": "1.0.0",
     "style-loader": "1.2.1",
     "ts-loader": "7.0.5",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }

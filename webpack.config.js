@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   cache: true,
-  entry: './src/index.tsx',
+  entry: path.resolve(__dirname, './src/index.tsx'),
   module: {
     rules: [
       { test: /\.ts(x)?$/, loader: 'ts-loader' },
