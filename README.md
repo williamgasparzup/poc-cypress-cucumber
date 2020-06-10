@@ -10,7 +10,7 @@ PhotoGram is basically a photo searcher, and its based on the Pexels API. The ph
 
 ### Running the application
 
-1. Firstly, get an API Key from Pexels (more details [here](<[https://www.pexels.com/api/documentation/](https://www.pexels.com/api/documentation/)>))
+1. Firstly, get an API Key from Pexels (more details [here](https://www.pexels.com/api/documentation/))
 2. Create a file named `.env`, at the project root
 3. At the `.env` file, you must create a new environment variable called `API_KEY` with its value being your API Key
 
@@ -47,9 +47,9 @@ Cypress is a test framework, where we can develop BDD tests to any front-end lib
 - Write tests for different front-ends in a single language;
 - Control the time;
 - Get screenshots and videos for failing tests;
-- Test the level of accessibility of our app (with this [plugin](<[https://github.com/avanslaars/cypress-axe](https://github.com/avanslaars/cypress-axe)>));
-- Write unit tests (with this [plugin](<[https://github.com/bahmutov/cypress-react-unit-test](https://github.com/bahmutov/cypress-react-unit-test)>));
-- Get the test coverage;
+- Test the level of accessibility of our app (with this [plugin](https://github.com/avanslaars/cypress-axe));
+- Write unit tests (with this [plugin](https://github.com/bahmutov/cypress-react-unit-test));
+- Get the test coverage.
 
 ### Why Cucumber?
 
@@ -119,17 +119,17 @@ Well, as I mentioned before, configuring the plugins can be fairly difficult, an
 
 ## References
 
-- [Cypress](<[https://www.cypress.io/](https://www.cypress.io/)>)
-- [Cypress API](<[https://docs.cypress.io/api/api/table-of-contents.html](https://docs.cypress.io/api/api/table-of-contents.html)>)
-- [Cypress plugins](<[https://docs.cypress.io/plugins/](https://docs.cypress.io/plugins/)>)
-- [Cucumber](<[https://cucumber.io/](https://cucumber.io/)>)
-- [Cucumber plugin for cypress](<[https://github.com/TheBrainFamily/cypress-cucumber-preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor)>)
-- [TypeScript](<[https://www.typescriptlang.org/](https://www.typescriptlang.org/)>)
-- [Cypress with TypeScript](<[https://docs.cypress.io/guides/tooling/typescript-support.html#Install-TypeScript](https://docs.cypress.io/guides/tooling/typescript-support.html#Install-TypeScript)>)
-- [Pexels API](<[https://www.pexels.com/api/?locale=en-US](https://www.pexels.com/api/?locale=en-US)>)
-- [Material-UI](<[https://material-ui.com/](https://material-ui.com/)>)
-- [Prettier](<[https://prettier.io/](https://prettier.io/)>)
-- [Webpack](<[https://webpack.js.org/](https://webpack.js.org/)>)
+- [Cypress](https://www.cypress.io/)
+- [Cypress API](https://docs.cypress.io/api/api/table-of-contents.html)
+- [Cypress plugins](https://docs.cypress.io/plugins/)
+- [Cucumber](https://cucumber.io/)
+- [Cucumber plugin for cypress](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Cypress with TypeScript](https://docs.cypress.io/guides/tooling/typescript-support.html#Install-TypeScript)
+- [Pexels API](https://www.pexels.com/api/?locale=en-US)
+- [Material-UI](https://material-ui.com/)
+- [Prettier](https://prettier.io/)
+- [Webpack](https://webpack.js.org/)
 
 ## Licence
 
