@@ -100,7 +100,7 @@ Feature: Scroll
 
   Scenario: Verifying the scroll
     When I scroll to the top of the page
-	Then The scroll position should be at the top
+    Then The scroll position should be at the top
 ```
 
 So, there are some advantages:
