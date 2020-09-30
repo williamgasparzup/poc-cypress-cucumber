@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cypress:open": "cypress open",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
   },
   "author": "William Rozin Gaspar <william.gaspar@zup.com.br>",
   "license": "Apache-2.0",
